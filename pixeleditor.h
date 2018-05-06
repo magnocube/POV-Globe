@@ -3,7 +3,17 @@
 
 #include <QWidget>
 #include <QGraphicsScene>
+#include <QString>
 #include "slide.h"
+#include <QImage>
+
+#include <QDebug>
+
+#include "customellipse.h"
+#include "customrect.h"
+#include "customtext.h"
+
+
 
 namespace Ui {
 class PixelEditor;
@@ -20,15 +30,23 @@ public:
 
 private slots:
     void on_SafeButton_clicked();
-
     void on_zoomInButton_clicked();
-
     void on_zoomOutButton_clicked();
+    void on_addEllipseButton_clicked();
+
+    void on_addRectangleButton_clicked();
+
+    void on_addTextButton_clicked();
+
 
 private:
     Ui::PixelEditor *ui;
-
     Slide *myCurrentSlide;
+    void setupLayout();
+
+protected:
+    //void mouseDoubleClickEvent(QGraphicsSceneMouseEvent  *e);
+    void mousePressEvent(QGraphicsSceneMouseEvent *e);
 };
 
 #endif // PIXELEDITOR_H

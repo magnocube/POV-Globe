@@ -61,6 +61,7 @@ void Slide::safe()
 
     myImage = image;
     myScaledImageForDisplaying = myImage.scaled(minimumSlideSizeWidth, minimumSlideSizeHeight, Qt::IgnoreAspectRatio);
+    repaint(); //so it updates instantly in the slides
 }
 
 void Slide::paintEvent(QPaintEvent *event)  //maybe for displaying an image in sted of a pixmap

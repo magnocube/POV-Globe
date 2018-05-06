@@ -1,6 +1,11 @@
 <RCC>
-    <qresource prefix="/loginPage">
-        <file>Staff-Login.jpg</file>
-        <file>slide.jpg</file>
+    <qresource prefix="/images">
+        <file>images/slide.jpg</file>
+    </qresource>
+    <qresource prefix="/icons">
+        <file>icons/Staff-Login.jpg</file>
+        <file>icons/ellipse.png</file>
+        <file>icons/rectangle.png</file>
+        <file>icons/text.png</file>
     </qresource>
 </RCC>

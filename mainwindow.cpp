@@ -9,6 +9,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->stackedWidget->addWidget(&hPage);
 
     setupLayout();
+    setLayout(QLayout());
 }
 
 MainWindow::~MainWindow()
@@ -34,7 +35,7 @@ void MainWindow::on_startButton_clicked()   //simple login function
 
 void MainWindow::setupLayout()
 {
-        QPixmap pixmap(":/loginPage/Staff-Login.jpg");
+        QPixmap pixmap(":/icons/icons/Staff-Login.jpg");
         QIcon myIcon(pixmap);
 
         ui->startButton->setIcon(myIcon);

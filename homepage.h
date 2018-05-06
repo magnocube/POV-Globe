@@ -14,6 +14,8 @@
 #include <QFileDialog>
 #include <QGraphicsPixmapItem>
 
+
+
 namespace Ui {
 class HomePage;
 }

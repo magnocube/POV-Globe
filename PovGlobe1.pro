@@ -31,7 +31,12 @@ SOURCES += \
     slidecontrol.cpp \
     pixeleditor.cpp \
     slide.cpp \
-    myudp.cpp
+    myudp.cpp \
+    customellipse.cpp \
+    customrect.cpp \
+    customtext.cpp \
+    customrect_editor.cpp \
+    customellipse_editor.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -39,13 +44,20 @@ HEADERS += \
     slidecontrol.h \
     pixeleditor.h \
     slide.h \
-    myudp.h
+    myudp.h \
+    customellipse.h \
+    customrect.h \
+    customtext.h \
+    customrect_editor.h \
+    customellipse_editor.h
 
 FORMS += \
         mainwindow.ui \
     homepage.ui \
     slidecontrol.ui \
-    pixeleditor.ui
+    pixeleditor.ui \
+    customrect_editor.ui \
+    customellipse_editor.ui
 
 RESOURCES += \
     files.qrc

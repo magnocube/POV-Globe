@@ -53,12 +53,12 @@ void HomePage::addNewSlide(QString type, QString param) //will be activated on t
     QVBoxLayout* myLayout = qobject_cast<QVBoxLayout*>(ui->scrollAreaWidgetContents_2->layout());
     QImage myImage;
     Slide *s;
-    QString slideName = "name" + QString::number(time->currentMSecsSinceEpoch()); // so the name is never the same
+    QString slideName = "nameSlide" + QString::number(time->currentMSecsSinceEpoch()); // so the name is never the same
     QGraphicsScene* theScene;
 
     if(type == "default"){
         if(param == "3image"){
-            myImage = QImage(":/loginPage/slide.jpg");
+            myImage = QImage(":/images/images/slide.jpg");
         } else if (param == "white"){
             QColor color = QColorDialog::getColor(Qt::white,this,"Choose desired background color");
             myImage = QPixmap(100, 100).toImage();
@@ -79,8 +79,14 @@ void HomePage::addNewSlide(QString type, QString param) //will be activated on t
     myImage = myImage.scaled(resolutionX, resolutionY, Qt::IgnoreAspectRatio);
 
     QGraphicsPixmapItem *imageItem = new QGraphicsPixmapItem( QPixmap::fromImage(myImage));// mooi verhaal dit
-    theScene->addItem(imageItem);
 
+    //imageItem->setFlag(QGraphicsItem::ItemIsSelectable);
+    //imageItem->setFlag(QGraphicsItem::ItemIsMovable);
+    //imageItem->setFlag(QGraphicsItem::ItemSendsGeometryChanges);
+
+
+
+    theScene->addItem(imageItem);
 
 
     s = new Slide(this, theScene, slideName);
