@@ -30,6 +30,7 @@ void CustomRect::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
     QRectF rec = boundingRect();
 
 
+
 //    QBrush brush(color);
 //    QPen pen(lineColor);
 

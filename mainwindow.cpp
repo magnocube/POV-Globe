@@ -9,7 +9,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->stackedWidget->addWidget(&hPage);
 
     setupLayout();
-    setLayout(QLayout());
+
 }
 
 MainWindow::~MainWindow()
