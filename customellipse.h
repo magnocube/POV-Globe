@@ -34,6 +34,10 @@ private:
     int lineThickness;
 
 
+signals:
+    void updateGraphics();
+
+
 
 public slots:
     void newProperties(int width, int height, int lineThichness, int rotation, QColor backColor, QColor lineColor);

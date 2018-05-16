@@ -7,6 +7,8 @@
 #include <QPainter>
 #include <QDateTime>
 #include <QMessageBox>
+#include <QDebug>
+#include "customtext_editor.h"
 
 
 class CustomText : public QGraphicsObject
@@ -25,6 +27,19 @@ private:
     int height;
     QColor color;
     QString textString;
+    QFont font;
+    int size;
+    int rotation;
+
+
+
+
+
+signals:
+    void updateGraphics();
+
+public slots:
+    void newProperties(int size,int rotation ,QColor color,QFont font,QString text);
 
 
 

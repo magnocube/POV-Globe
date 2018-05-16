@@ -83,6 +83,7 @@ void PixelEditor::on_addEllipseButton_clicked()
 
     CustomEllipse *ellipse = new  CustomEllipse();
     myCurrentSlide->getScene()->addItem(ellipse);
+    connect(ellipse,SIGNAL(updateGraphics()),this,SLOT(updateGraphicsview()));
 
 
 }
@@ -92,6 +93,7 @@ void PixelEditor::on_addRectangleButton_clicked()
 
     CustomRect *rect = new  CustomRect();
     myCurrentSlide->getScene()->addItem(rect);
+    connect(rect,SIGNAL(updateGraphics()),this,SLOT(updateGraphicsview()));
 
 }
 
@@ -99,6 +101,12 @@ void PixelEditor::on_addTextButton_clicked()
 {
     CustomText *text = new CustomText();
     myCurrentSlide->getScene()->addItem(text);
+    connect(text,SIGNAL(updateGraphics()),this,SLOT(updateGraphicsview()));
 
+}
+
+void PixelEditor::updateGraphicsview()
+{
+ ui->pixelGraphicsView->update();
 }
 

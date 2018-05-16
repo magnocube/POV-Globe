@@ -33,6 +33,9 @@ void CustomEllipse::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
     QPen pen(lineColor);
     pen.setWidth(lineThickness);
 
+
+
+
     painter->setPen(pen);
     painter->setBrush(brush);
     painter->rotate(rotation);
@@ -48,7 +51,8 @@ void CustomEllipse::newProperties(int width, int height, int lineThichness, int 
     this->rotation = rotation;
     this->color = backColor;
     this->lineColor = lineColor;
-    update();
+
+    emit updateGraphics();
 }
 
 void CustomEllipse::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *e)

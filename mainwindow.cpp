@@ -7,7 +7,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->stackedWidget->addWidget(&hPage);
-
+    setWindowTitle("POV Globe - login");
     setupLayout();
 
 }
@@ -15,6 +15,7 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+
 }
 
 void MainWindow::on_startButton_clicked()   //simple login function
@@ -26,6 +27,7 @@ void MainWindow::on_startButton_clicked()   //simple login function
 
     if(pw == "1234"){
         ui->stackedWidget->setCurrentWidget(&hPage);
+        setWindowTitle("POV Globe - configurator");
     } else {
         ui->lineEdit->setText("wrong...  try again");
     }

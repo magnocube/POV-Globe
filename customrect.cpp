@@ -73,7 +73,7 @@ void CustomRect::newProperties(int width, int height, int lineThichness, int rot
     this->color = backColor;
     this->lineColor = lineColor;
     this->borderRadius = borderRadius;
-    update();
+     emit updateGraphics();
 }
 
 

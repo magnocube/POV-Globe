@@ -38,6 +38,9 @@ private slots:
 
     void on_addTextButton_clicked();
 
+public slots:
+    void updateGraphicsview();
+
 
 private:
     Ui::PixelEditor *ui;
