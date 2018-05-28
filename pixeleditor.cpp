@@ -72,6 +72,11 @@ void PixelEditor::setupLayout()
     ui->addTextButton->setIconSize(QSize(width,height));
     ui->addTextButton->setIcon(textIcon);
 
+    QPixmap pixmapImage(":/icons/icons/image.png");
+    QIcon imageIcon(pixmapImage);
+    ui->addImageButton->setIconSize(QSize(width,height));
+    ui->addImageButton->setIcon(imageIcon);
+
 
 
 }
@@ -105,8 +110,28 @@ void PixelEditor::on_addTextButton_clicked()
 
 }
 
+void PixelEditor::on_addImageButton_clicked()
+{
+    QImage myImage;
+    QString fileName = QFileDialog::getOpenFileName(this,
+        tr("Open Image"), "/C", tr("Image Files (*.png *.jpg *.bmp *.jpeg *.gif)"));
+    qDebug() << fileName;
+    if(fileName != ""){
+         myImage = QImage(fileName);
+    } else{
+        return;
+    }
+
+
+    CustomImage *image = new CustomImage();
+    image->setImage(myImage);
+    myCurrentSlide->getScene()->addItem(image);
+    connect(image,SIGNAL(updateGraphics()),this,SLOT(updateGraphicsview()));
+
+}
 void PixelEditor::updateGraphicsview()
 {
  ui->pixelGraphicsView->update();
 }
+
 

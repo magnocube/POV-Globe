@@ -37,7 +37,9 @@ SOURCES += \
     customtext.cpp \
     customrect_editor.cpp \
     customellipse_editor.cpp \
-    customtext_editor.cpp
+    customtext_editor.cpp \
+    customimage.cpp \
+    customimage_editor.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -51,7 +53,9 @@ HEADERS += \
     customtext.h \
     customrect_editor.h \
     customellipse_editor.h \
-    customtext_editor.h
+    customtext_editor.h \
+    customimage.h \
+    customimage_editor.h
 
 FORMS += \
         mainwindow.ui \
@@ -60,7 +64,8 @@ FORMS += \
     pixeleditor.ui \
     customrect_editor.ui \
     customellipse_editor.ui \
-    customtext_editor.ui
+    customtext_editor.ui \
+    customimage_editor.ui
 
 RESOURCES += \
     files.qrc

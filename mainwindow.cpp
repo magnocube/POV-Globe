@@ -37,12 +37,12 @@ void MainWindow::on_startButton_clicked()   //simple login function
 
 void MainWindow::setupLayout()
 {
-        QPixmap pixmap(":/icons/icons/Staff-Login.jpg");
+        QPixmap pixmap(":/icons/icons/staff-login.jpg");
         QIcon myIcon(pixmap);
 
         ui->startButton->setIcon(myIcon);
-        ui->startButton->setIconSize(QSize(180,60));
-        ui->startButton->setStyleSheet("border-radius: 11px;");
+        ui->startButton->setIconSize(QSize(200,45));
+        ui->startButton->setStyleSheet("border-radius: 11px;     background-color: #00cc00; ");
         ui->startButton->setText("");
 
 

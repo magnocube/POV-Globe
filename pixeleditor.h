@@ -8,10 +8,12 @@
 #include <QImage>
 
 #include <QDebug>
+#include <QFileDialog>
 
 #include "customellipse.h"
 #include "customrect.h"
 #include "customtext.h"
+#include "customimage.h"
 
 
 
@@ -37,6 +39,8 @@ private slots:
     void on_addRectangleButton_clicked();
 
     void on_addTextButton_clicked();
+
+    void on_addImageButton_clicked();
 
 public slots:
     void updateGraphicsview();

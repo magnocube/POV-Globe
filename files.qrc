@@ -3,9 +3,10 @@
         <file>images/slide.jpg</file>
     </qresource>
     <qresource prefix="/icons">
-        <file>icons/Staff-Login.jpg</file>
         <file>icons/ellipse.png</file>
         <file>icons/rectangle.png</file>
         <file>icons/text.png</file>
+        <file>icons/image.png</file>
+        <file>icons/staff-login.jpg</file>
     </qresource>
 </RCC>
