@@ -37,6 +37,20 @@
        </property>
       </widget>
      </item>
+     <item>
+      <widget class="QPushButton" name="sendToGlobeButton">
+       <property name="text">
+        <string>Send current selected slide to globe</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="safeToPc">
+       <property name="text">
+        <string>Safe current selected slide to PC</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </item>
    <item>

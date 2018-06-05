@@ -531,34 +531,7 @@ QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
           </item>
           <item>
            <layout class="QGridLayout" name="gridLayout">
-            <item row="0" column="0" colspan="2">
-             <widget class="QLabel" name="label_3">
-              <property name="text">
-               <string>IP  adress: </string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="2">
-             <widget class="QLineEdit" name="IPLineEdit">
-              <property name="maximumSize">
-               <size>
-                <width>135</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="text">
-               <string>192.168.137.</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="0">
-             <widget class="QLabel" name="label_2">
-              <property name="text">
-               <string>Password:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="2">
+            <item row="2" column="2">
              <widget class="QLineEdit" name="lineEdit">
               <property name="maximumSize">
                <size>
@@ -574,14 +547,47 @@ QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
               </property>
              </widget>
             </item>
+            <item row="0" column="2">
+             <widget class="QLineEdit" name="IPLineEdit">
+              <property name="minimumSize">
+               <size>
+                <width>110</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>135</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>192.168.137.</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0" colspan="2">
+             <widget class="QLabel" name="label_3">
+              <property name="text">
+               <string>IP motor: </string>
+              </property>
+             </widget>
+            </item>
             <item row="2" column="0">
+             <widget class="QLabel" name="label_2">
+              <property name="text">
+               <string>Password:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="0">
              <widget class="QLabel" name="label_4">
               <property name="text">
                <string>resolution:</string>
               </property>
              </widget>
             </item>
-            <item row="2" column="1" colspan="2">
+            <item row="3" column="1" colspan="2">
              <layout class="QHBoxLayout" name="horizontalLayout">
               <item>
                <widget class="QLineEdit" name="lineEditX">
@@ -592,7 +598,7 @@ QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
                  </size>
                 </property>
                 <property name="text">
-                 <string>256</string>
+                 <string>128</string>
                 </property>
                </widget>
               </item>
@@ -605,11 +611,31 @@ QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
                  </size>
                 </property>
                 <property name="text">
-                 <string>128</string>
+                 <string>64</string>
                 </property>
                </widget>
               </item>
              </layout>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="label_5">
+              <property name="text">
+               <string>IP globe</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="2">
+             <widget class="QLineEdit" name="ipGlobeLineEdit">
+              <property name="minimumSize">
+               <size>
+                <width>110</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>192.168.137.</string>
+              </property>
+             </widget>
             </item>
            </layout>
           </item>

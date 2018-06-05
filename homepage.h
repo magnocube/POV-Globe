@@ -13,6 +13,7 @@
 #include <QColorDialog>
 #include <QFileDialog>
 #include <QGraphicsPixmapItem>
+#include "helper.h"
 
 
 
@@ -27,6 +28,7 @@ class HomePage : public QWidget
 public:
     explicit HomePage(QWidget *parent = 0);
     void setupUDP(QString ipString);
+    void setupLedUDP(QString ipstring);
     void setResolution(int x, int y);
     ~HomePage();
 
@@ -56,6 +58,7 @@ private slots:
     void on_pushButton_clicked();
     void on_StopPushButton_clicked();
     void on_GlobeSpeedSlider_valueChanged(int value);
+    void on_pushButton_2_clicked();
 };
 
 #endif // HOMEPAGE_H

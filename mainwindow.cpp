@@ -22,6 +22,7 @@ void MainWindow::on_startButton_clicked()   //simple login function
 {
     QString pw = ui->lineEdit->text();
     QString IP = ui->IPLineEdit->text();
+    QString IPGlobe = ui->ipGlobeLineEdit->text();
     int x = ui->lineEditX->text().toInt();
     int y = ui->lineEditY->text().toInt();
 
@@ -32,6 +33,7 @@ void MainWindow::on_startButton_clicked()   //simple login function
         ui->lineEdit->setText("wrong...  try again");
     }
     hPage.setupUDP(IP);
+    hPage.setupLedUDP(IPGlobe);
     hPage.setResolution(x,y);
 }
 

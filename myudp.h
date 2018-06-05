@@ -5,6 +5,7 @@
 #include <QUdpSocket>
 #include <QDebug>
 
+
 class MyUDP : public QObject
 {
     Q_OBJECT
@@ -14,6 +15,7 @@ public:
     void StartGlobe();
     void StopGlobe();
     void ChangeValue(int value);
+    void sendToLeds(QByteArray byteArray);
 
 
 signals:

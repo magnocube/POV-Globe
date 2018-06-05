@@ -38,6 +38,15 @@ void MyUDP::ChangeValue(int value)
     sendData(Data);
 }
 
+void MyUDP::sendToLeds(QByteArray byteArray)
+{
+    //a lot of work to do
+    qDebug() << byteArray.toLower() << ipAdress;
+
+    socket->writeDatagram(byteArray,QHostAddress(ipAdress),4210);
+
+}
+
 void MyUDP::readyRead() //will be called when data is received on the udp interface
 {
     QByteArray Buffer;

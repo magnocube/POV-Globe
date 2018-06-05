@@ -34,6 +34,11 @@ void HomePage::setupUDP(QString ipString) //lot of errors if this method does no
     timer->start(1000);
 }
 
+void HomePage::setupLedUDP(QString ipstring)
+{
+    tab_slideControl->setUpUdpLeds(ipstring);
+}
+
 void HomePage::setResolution(int x, int y)
 {
     resolutionX = x;
@@ -89,7 +94,7 @@ void HomePage::addNewSlide(QString type, QString param) //will be activated on t
     theScene->addItem(imageItem);
 
 
-    s = new Slide(this, theScene, slideName);
+    s = new Slide(this, theScene, slideName,resolutionX,resolutionY);
     myLayout->insertWidget(0,s);
 
 
@@ -166,4 +171,10 @@ void HomePage::on_StopPushButton_clicked()
 void HomePage::on_GlobeSpeedSlider_valueChanged(int value)
 {
     GlobePipeConnection->ChangeValue(value);
+}
+
+void HomePage::on_pushButton_2_clicked() // helpButton
+{
+    helper h(this);
+    h.exec();
 }
