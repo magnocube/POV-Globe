@@ -99,6 +99,8 @@ void HomePage::addNewSlide(QString type, QString param) //will be activated on t
 
 
     connect(s,SIGNAL(onClick(QString)),this,SLOT(slideWantsAttention(QString)));
+    s->safe(); // select the current selected slide
+
 //    Slide *mySlide = ui->scrollAreaWidgetContents_2->findChild<Slide *>("Button");
 //    if(mySlide != 0){
 //        mySlide->setText("trololol");

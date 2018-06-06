@@ -66,6 +66,7 @@ void Slide::safe()
     myImage = image.scaled(resolutionX, resolutionY, Qt::IgnoreAspectRatio);;
 
     myScaledImageForDisplaying = myImage.scaled(minimumSlideSizeWidth, minimumSlideSizeHeight, Qt::IgnoreAspectRatio);
+    emit onClick(objectName());   // make sure the image is selected and updated on all other places
     repaint(); //so it updates instantly in the slides
 }
 
