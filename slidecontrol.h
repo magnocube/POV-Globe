@@ -43,6 +43,8 @@ private:
     const int PACKETSIZE=1460;
     const int DATALENGTH=1450;
 
+    QImage PrepreImageForSending(QImage image);
+
 signals:
     void NewSlide(QString type, QString param);
 

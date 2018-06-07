@@ -49,24 +49,21 @@ void SlideControl::on_addImageButton_clicked()
 void SlideControl::on_sendToGlobeButton_clicked()
 {
 
+
     QString path = QDir::currentPath();
     path.append("/latestSlide.jpg");
     myCurrentSlide->safeToDisk(path);      //safe the image in a relative path to store it.
 
 
     QImage image = myCurrentSlide->getImage();
-    qDebug() << "image dimaensions: " << QString::number(image.width()) << "  " << QString::number(image.height());
+    QImage imageToSend = PrepreImageForSending(image);
 
-            QMatrix rm;
-            rm.rotate(270);
-            image = image.transformed(rm);
-    qDebug() << "image dimaensions: " << QString::number(image.width()) << "  " << QString::number(image.height());
 
 
     QByteArray ba;
     QBuffer buffer(&ba);
     buffer.open(QIODevice::WriteOnly);
-    image.save(&buffer, "jpg",25); // writes image into ba in jpg format
+    imageToSend.save(&buffer, "jpg",25); // writes image into ba in jpg format
 
     qDebug() << ba.length();
 
@@ -103,4 +100,55 @@ void SlideControl::on_safeToPc_clicked()
 {
     // get the path..
     myCurrentSlide->safeToDisk("");
+}
+
+QImage SlideControl::PrepreImageForSending(QImage image)
+{
+    //- make 2 images, with even and uneven slices
+    QImage image1 = QImage(image.width(),image.height()/2,image.format());
+    QImage image2 = QImage(image.width(),image.height()/2,image.format());
+    for(int i = 0; i< image.height()/2;i++){
+
+        for(int w = 0; w< image.width();w++){
+            image1.setPixel(w,i,image.pixel(w,2*i));
+            image2.setPixel(w,i,image.pixel(w,2*i+1));
+        }
+
+    }
+
+
+    //- shift 1 image by resulution/2 pixels
+    QImage shifted1;
+    QImage shifted2;
+    shifted1 = image2.copy(0,0,0.5*image2.width(),image2.height());
+    shifted2 = image2.copy(0.5*image2.width(),0,image2.width(),image2.height());
+
+
+    //- add them
+    QImage result(image.width(), image.height(), image.format()); // image to hold the join of image 1 & 2
+    QPainter painter(&result);
+    painter.drawImage(0, 0, shifted2);                //print image2(64 pixels shifted) above, and image 1 below
+    painter.drawImage(0.5*image.width(), 0, shifted1);
+    painter.drawImage(0,0.5*image.height(),image1);
+    painter.end(); //cant save a device that is being painted.
+
+    // rotate them
+    QMatrix rm;
+    rm.rotate(270);
+    result = result.transformed(rm);
+
+
+    QString path = QDir::currentPath();
+    path.append("/testShiftedImage.jpg");
+    result.save(path);
+
+    return result;
+
+
+
+
+
+
+
+
 }
