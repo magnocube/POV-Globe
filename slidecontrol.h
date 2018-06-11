@@ -9,6 +9,7 @@
 #include <QBuffer>
 #include <QMatrix>
 
+
 namespace Ui {
 class SlideControl;
 }

@@ -60,10 +60,25 @@ void SlideControl::on_sendToGlobeButton_clicked()
 
 
 
-    QByteArray ba;
-    QBuffer buffer(&ba);
-    buffer.open(QIODevice::WriteOnly);
-    imageToSend.save(&buffer, "jpg",25); // writes image into ba in jpg format
+    QImage imageToSafe =imageToSend;
+    //do edits on 'imageToSafe'
+    path = QDir::currentPath();
+    path.append("/testShiftedImage.jpg");
+    qDebug() << path;
+    qDebug() << QString(imageToSafe.save(path,"jpg",25));   //quallity 25. size of 3.1kb
+
+
+
+
+//    QByteArray ba();
+//    QBuffer buffer(&ba);
+//   buffer.open(QIODevice::WriteOnly);
+
+   QFile file(path);
+   file.open(QIODevice::ReadOnly);
+   QByteArray ba = file.readAll();
+    //imageToSend.save(&buffer, "jpg",5); // writes image into ba in jpg format
+
 
     qDebug() << ba.length();
 
@@ -137,10 +152,7 @@ QImage SlideControl::PrepreImageForSending(QImage image)
     rm.rotate(270);
     result = result.transformed(rm);
 
-
-    QString path = QDir::currentPath();
-    path.append("/testShiftedImage.jpg");
-    result.save(path);
+    qDebug() <<  result.width() <<  "  " << result.height();
 
     return result;
 
