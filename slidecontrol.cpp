@@ -51,8 +51,6 @@ void SlideControl::on_sendToGlobeButton_clicked()
 
 
     QString path = QDir::currentPath();
-    path.append("/latestSlide.jpg");
-    myCurrentSlide->safeToDisk(path);      //safe the image in a relative path to store it.
 
 
     QImage image = myCurrentSlide->getImage();
@@ -70,15 +68,14 @@ void SlideControl::on_sendToGlobeButton_clicked()
 
 
 
-//    QByteArray ba();
-//    QBuffer buffer(&ba);
-//   buffer.open(QIODevice::WriteOnly);
+    QByteArray ba;
+    QBuffer buffer(&ba);
+    buffer.open(QIODevice::WriteOnly);
+    imageToSafe.save(&buffer, "jpg",25);
 
-   QFile file(path);
-   file.open(QIODevice::ReadOnly);
-   QByteArray ba = file.readAll();
-    //imageToSend.save(&buffer, "jpg",5); // writes image into ba in jpg format
-
+//    QFile file(path);
+//    file.open(QIODevice::ReadOnly);
+//    QByteArray ba = file.readAll();
 
     qDebug() << ba.length();
 
@@ -99,9 +96,11 @@ void SlideControl::on_sendToGlobeButton_clicked()
         QByteArray header(10,'^');  //^ is the default value
         header[0] = 0;
         header[1] = (char)(imagePartLength>>8);
+        header[2] = (char)(imagePartLength);
         header[3] = part;
         header[4] = parts;
         header[5] = flowLabel;
+        header[6] = 130;
 
         QByteArray toSend = header;
         toSend.append(partBuffer);
