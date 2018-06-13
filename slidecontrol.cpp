@@ -100,7 +100,9 @@ void SlideControl::on_sendToGlobeButton_clicked()
         header[3] = part;
         header[4] = parts;
         header[5] = flowLabel;
-        header[6] = 130;
+        header[6] = (char)ui->rotatieSlider->value();
+        header[7] = (char)ui->brightnessSlider->value();
+        header[8] = (char)ui->gammaSlider->value();
 
         QByteArray toSend = header;
         toSend.append(partBuffer);
@@ -150,6 +152,7 @@ QImage SlideControl::PrepreImageForSending(QImage image)
     QMatrix rm;
     rm.rotate(270);
     result = result.transformed(rm);
+
 
     qDebug() <<  result.width() <<  "  " << result.height();
 
