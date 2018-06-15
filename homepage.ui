@@ -104,14 +104,10 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QPushButton" name="pushButton">
-       <property name="text">
-        <string>start motor</string>
-       </property>
-      </widget>
-     </item>
-     <item>
       <widget class="QPushButton" name="StopPushButton">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(170, 0, 0);</string>
+       </property>
        <property name="text">
         <string>stop motor</string>
        </property>

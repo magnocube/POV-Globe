@@ -41,7 +41,7 @@ void MyUDP::ChangeValue(int value)
 void MyUDP::sendToLeds(QByteArray byteArray)
 {
     //a lot of work to do
-    qDebug() << byteArray.toLower() << ipAdress;
+   // qDebug() << byteArray.toLower() << ipAdress;
 
     socket->writeDatagram(byteArray,QHostAddress(ipAdress),4210);
 

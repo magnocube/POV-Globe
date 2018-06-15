@@ -36,6 +36,15 @@ private slots:
 
     void on_safeToPc_clicked();
 
+    void on_compressieSlider_valueChanged(int value);
+    void sendSettings();
+
+    void on_gammaSlider_valueChanged(int value);
+
+    void on_rotatieSlider_valueChanged(int value);
+
+    void on_brightnessSlider_valueChanged(int value);
+
 private:
     Ui::SlideControl *ui;
     Slide *myCurrentSlide;

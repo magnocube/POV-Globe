@@ -562,7 +562,7 @@ QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
                </size>
               </property>
               <property name="text">
-               <string>192.168.137.</string>
+               <string>192.168.137.101</string>
               </property>
              </widget>
             </item>

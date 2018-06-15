@@ -54,6 +54,7 @@ void SlideControl::on_sendToGlobeButton_clicked()
 
 
     QImage image = myCurrentSlide->getImage();
+
     QImage imageToSend = PrepreImageForSending(image);
 
 
@@ -63,7 +64,7 @@ void SlideControl::on_sendToGlobeButton_clicked()
     path = QDir::currentPath();
     path.append("/testShiftedImage.jpg");
     qDebug() << path;
-    qDebug() << QString(imageToSafe.save(path,"jpg",25));   //quallity 25. size of 3.1kb
+    qDebug() << QString(imageToSafe.save(path,"jpg",ui->compressieSlider->value()));   //quallity 25. size of 3.1kb
 
 
 
@@ -71,7 +72,7 @@ void SlideControl::on_sendToGlobeButton_clicked()
     QByteArray ba;
     QBuffer buffer(&ba);
     buffer.open(QIODevice::WriteOnly);
-    imageToSafe.save(&buffer, "jpg",25);
+    imageToSafe.save(&buffer, "jpg",ui->compressieSlider->value());
 
 //    QFile file(path);
 //    file.open(QIODevice::ReadOnly);
@@ -100,9 +101,9 @@ void SlideControl::on_sendToGlobeButton_clicked()
         header[3] = part;
         header[4] = parts;
         header[5] = flowLabel;
-        header[6] = (char)ui->rotatieSlider->value();
-        header[7] = (char)ui->brightnessSlider->value();
-        header[8] = (char)ui->gammaSlider->value();
+        //header[6] = (char)(128-ui->rotatieSlider->value());
+        //header[7] = (char)ui->brightnessSlider->value();
+        //header[8] = (char)ui->gammaSlider->value();
 
         QByteArray toSend = header;
         toSend.append(partBuffer);
@@ -110,6 +111,16 @@ void SlideControl::on_sendToGlobeButton_clicked()
         udpToLedsConnection->sendToLeds(toSend);
     }
 
+}
+void SlideControl::sendSettings()
+{
+        QByteArray header(10,'^');  //^ is the default value
+        header[0] = 1;
+        header[2] = (char)(128-ui->rotatieSlider->value());
+        header[3] = (char)ui->brightnessSlider->value();
+        header[4] = (char)ui->gammaSlider->value();
+        udpToLedsConnection->sendToLeds(header);
+        qDebug() << "new settings sended";
 }
 
 void SlideControl::on_safeToPc_clicked()
@@ -165,4 +176,25 @@ QImage SlideControl::PrepreImageForSending(QImage image)
 
 
 
+}
+
+void SlideControl::on_compressieSlider_valueChanged(int value)
+{
+    // do nothing
+}
+
+
+void SlideControl::on_gammaSlider_valueChanged(int value)
+{
+    sendSettings();
+}
+
+void SlideControl::on_rotatieSlider_valueChanged(int value)
+{
+    sendSettings();
+}
+
+void SlideControl::on_brightnessSlider_valueChanged(int value)
+{
+    sendSettings();
 }

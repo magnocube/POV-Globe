@@ -167,7 +167,9 @@ void HomePage::on_pushButton_clicked() //startbutton motor with question
 
 void HomePage::on_StopPushButton_clicked()
 {
-    GlobePipeConnection->StopGlobe();
+    //GlobePipeConnection->StopGlobe();
+     GlobePipeConnection->ChangeValue(0);
+     ui->GlobeSpeedSlider->setValue(0);
 }
 
 void HomePage::on_GlobeSpeedSlider_valueChanged(int value)
