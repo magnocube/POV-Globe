@@ -94,19 +94,19 @@ void SlideControl::on_sendToGlobeButton_clicked()
         QByteArray partBuffer = ba.mid(progress,imagePartLength);
         progress+=imagePartLength;
 
-        QByteArray header(10,'^');  //^ is the default value
+        QByteArray header(5,'^');  //^ is the default value
         header[0] = 0;
-        header[1] = (char)(imagePartLength>>8);
-        header[2] = (char)(imagePartLength);
-        header[3] = part;
-        header[4] = parts;
-        header[5] = flowLabel;
-        //header[6] = (char)(128-ui->rotatieSlider->value());
-        //header[7] = (char)ui->brightnessSlider->value();
-        //header[8] = (char)ui->gammaSlider->value();
+        header[1] = 0;
+        header[2] = 0;
+        header[3] = 0;
+        header[4] = 2;//version
+        if(part==parts-1)
+        {
+            header[3] = 1;
+        }
 
-        QByteArray toSend = header;
-        toSend.append(partBuffer);
+        QByteArray toSend = partBuffer;
+        toSend.append(header);
 
         udpToLedsConnection->sendToLeds(toSend);
     }
@@ -114,11 +114,12 @@ void SlideControl::on_sendToGlobeButton_clicked()
 }
 void SlideControl::sendSettings()
 {
-        QByteArray header(10,'^');  //^ is the default value
-        header[0] = 1;
-        header[2] = (char)(128-ui->rotatieSlider->value());
-        header[3] = (char)ui->brightnessSlider->value();
-        header[4] = (char)ui->gammaSlider->value();
+        QByteArray header(5,'^');  //^ is the default value
+        header[0]=0;
+        header[1] = (char)(128-ui->rotatieSlider->value());
+        header[2] = (char)ui->brightnessSlider->value();
+        header[3] = (char)ui->gammaSlider->value();
+        header[4] = 1;
         udpToLedsConnection->sendToLeds(header);
         qDebug() << "new settings sended";
 }

@@ -106,6 +106,12 @@
            <property name="maximum">
             <number>255</number>
            </property>
+           <property name="singleStep">
+            <number>10</number>
+           </property>
+           <property name="pageStep">
+            <number>20</number>
+           </property>
            <property name="value">
             <number>128</number>
            </property>
@@ -122,6 +128,12 @@
            <property name="maximum">
             <number>128</number>
            </property>
+           <property name="singleStep">
+            <number>10</number>
+           </property>
+           <property name="pageStep">
+            <number>20</number>
+           </property>
            <property name="orientation">
             <enum>Qt::Vertical</enum>
            </property>
@@ -131,6 +143,12 @@
           <widget class="QSlider" name="brightnessSlider">
            <property name="maximum">
             <number>31</number>
+           </property>
+           <property name="singleStep">
+            <number>10</number>
+           </property>
+           <property name="pageStep">
+            <number>20</number>
            </property>
            <property name="value">
             <number>31</number>
@@ -144,6 +162,12 @@
           <widget class="QSlider" name="contrastSlider">
            <property name="maximum">
             <number>100</number>
+           </property>
+           <property name="singleStep">
+            <number>10</number>
+           </property>
+           <property name="pageStep">
+            <number>20</number>
            </property>
            <property name="value">
             <number>50</number>
