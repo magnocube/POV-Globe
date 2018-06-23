@@ -225,13 +225,14 @@ void SlideControl::on_startVideo_clicked()
 
 
     QString command;
-    command.append("ffmpeg -i ");
+    command.append("ffmpeg -i \"");
     command.append(fileName);
-    command.append(" ");
+    command.append("\" \"");
     command.append(path);
-    command.append("/image%04d.jpg");
+    command.append("/image%04d.jpg\"");
     command.append(" -hide_banner");
-    qDebug() << "command for ffmpeg: " << command;
+
+    qDebug() << "command for ffmpeg: " << command.toUtf8().constData();
 
     //split video in frames
     QProcess cmd;
