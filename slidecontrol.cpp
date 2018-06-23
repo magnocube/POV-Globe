@@ -7,109 +7,46 @@ SlideControl::SlideControl(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    videoTimer = new QTimer(this);
+    connect(videoTimer,SIGNAL(timeout()),SLOT(handleVideo()));
 
+    xResolution = 16;
+    yResolution = 16;
 
 }
-
 SlideControl::~SlideControl()
 {
     delete ui;
 }
-
 void SlideControl::setCurrentImage(Slide *theSlide)
 {
     myCurrentSlide = theSlide;
     ui->imageLabel->setPixmap(QPixmap::fromImage(theSlide->getImage()));
 }
-
 void SlideControl::setUpUdpLeds(QString ipstring)
 {
     udpToLedsConnection = new MyUDP(this,ipstring);
 }
-
-
-void SlideControl::on_addSlideButton_clicked()
+void SlideControl::setResolution(int x, int y)
 {
-    emit NewSlide("default","3image");
-
-
-
+    xResolution = x;
+    yResolution = y;
 }
-
 void SlideControl::on_pushButton_clicked()
 {
     emit NewSlide("default","white");
 }
-
 void SlideControl::on_addImageButton_clicked()
 {
     emit NewSlide("default","image");
 }
-
 void SlideControl::on_sendToGlobeButton_clicked()
 {
 
 
-    QString path = QDir::currentPath();
-
 
     QImage image = myCurrentSlide->getImage();
-
-    QImage imageToSend = PrepreImageForSending(image);
-
-
-
-    QImage imageToSafe =imageToSend;
-    //do edits on 'imageToSafe'
-    path = QDir::currentPath();
-    path.append("/testShiftedImage.jpg");
-    qDebug() << path;
-    qDebug() << QString(imageToSafe.save(path,"jpg",ui->compressieSlider->value()));   //quallity 25. size of 3.1kb
-
-
-
-
-    QByteArray ba;
-    QBuffer buffer(&ba);
-    buffer.open(QIODevice::WriteOnly);
-    imageToSafe.save(&buffer, "jpg",ui->compressieSlider->value());
-
-//    QFile file(path);
-//    file.open(QIODevice::ReadOnly);
-//    QByteArray ba = file.readAll();
-
-    qDebug() << ba.length();
-
-
-    int parts = ceil((double)ba.length()/PACKETSIZE);
-    int progress =0;
-    char flowLabel=0;
-
-    for(char part = 0; progress < ba.length();part++){
-        int imagePartLength=DATALENGTH;
-        if(progress+DATALENGTH>ba.length())
-        {
-            imagePartLength=ba.length()-progress;
-        }
-        QByteArray partBuffer = ba.mid(progress,imagePartLength);
-        progress+=imagePartLength;
-
-        QByteArray header(5,'^');  //^ is the default value
-        header[0] = 0;
-        header[1] = 0;
-        header[2] = 0;
-        header[3] = 0;
-        header[4] = 2;//version
-        if(part==parts-1)
-        {
-            header[3] = 1;
-        }
-
-        QByteArray toSend = partBuffer;
-        toSend.append(header);
-
-        udpToLedsConnection->sendToLeds(toSend);
-    }
+    sendImage(image);
 
 }
 void SlideControl::sendSettings()
@@ -123,13 +60,11 @@ void SlideControl::sendSettings()
         udpToLedsConnection->sendToLeds(header);
         qDebug() << "new settings sended";
 }
-
 void SlideControl::on_safeToPc_clicked()
 {
     // get the path..
     myCurrentSlide->safeToDisk("");
 }
-
 QImage SlideControl::PrepreImageForSending(QImage image)
 {
     //- make 2 images, with even and uneven slices
@@ -166,7 +101,7 @@ QImage SlideControl::PrepreImageForSending(QImage image)
     result = result.transformed(rm);
 
 
-    qDebug() <<  result.width() <<  "  " << result.height();
+    //qDebug() <<  result.width() <<  "  " << result.height();
 
     return result;
 
@@ -178,24 +113,136 @@ QImage SlideControl::PrepreImageForSending(QImage image)
 
 
 }
+void SlideControl::sendImage(QImage image)
+{
+     QString path = QDir::currentPath();
+    QImage imageToSend = PrepreImageForSending(image);
 
+
+
+    QByteArray ba;
+    QBuffer buffer(&ba);
+    buffer.open(QIODevice::WriteOnly);
+    imageToSend.save(&buffer, "jpg",ui->compressieSlider->value());
+
+//    QFile file(path);
+//    file.open(QIODevice::ReadOnly);
+//    QByteArray ba = file.readAll();
+    qDebug() << ba.length();
+
+
+    int parts = ceil((double)ba.length()/PACKETSIZE);
+    int progress =0;
+    char flowLabel=0;
+
+    for(char part = 0; progress < ba.length();part++){
+        int imagePartLength=DATALENGTH;
+        if(progress+DATALENGTH>ba.length())
+        {
+            imagePartLength=ba.length()-progress;
+        }
+        QByteArray partBuffer = ba.mid(progress,imagePartLength);
+        progress+=imagePartLength;
+
+        QByteArray header(5,'^');  //^ is the default value
+        header[0] = 0;
+        header[1] = 0;
+        header[2] = 0;
+        header[3] = 0;
+        header[4] = 2;//version
+        if(part==parts-1)
+        {
+            header[3] = 1;
+        }
+
+        QByteArray toSend = partBuffer;
+        toSend.append(header);
+
+        udpToLedsConnection->sendToLeds(toSend);
+    }
+}
+void SlideControl::handleVideo()
+{
+    QString path = QDir::currentPath();  //home dir of project
+    path.append("/videoMap/image");
+    if(currentVideoFrame < 10){
+        path.append("000");
+    }else if(currentVideoFrame < 100){
+        path.append("00");
+    }else if(currentVideoFrame < 1000){
+        path.append("0");
+    }
+    path.append(QString::number(currentVideoFrame));
+    path.append(".jpg");
+    qDebug() << "path for video: " << path;
+
+    QImage videoImage(path);
+    videoImage = videoImage.scaled(xResolution, yResolution, Qt::IgnoreAspectRatio);
+    sendImage(videoImage);
+
+    currentVideoFrame++;
+    if(currentVideoFrame > numVideoFrames){
+        videoTimer->stop();
+    }
+
+}
 void SlideControl::on_compressieSlider_valueChanged(int value)
 {
     // do nothing
 }
-
-
 void SlideControl::on_gammaSlider_valueChanged(int value)
 {
     sendSettings();
 }
-
 void SlideControl::on_rotatieSlider_valueChanged(int value)
 {
     sendSettings();
 }
-
 void SlideControl::on_brightnessSlider_valueChanged(int value)
 {
     sendSettings();
+}
+
+void SlideControl::on_startVideo_clicked()
+{
+
+    QString path = QDir::currentPath();  //home dir of project
+    QDir dir(path);
+    path.append("/videoMap");
+
+
+    dir.setPath(path);
+
+    dir.removeRecursively();
+    dir.setPath(QDir::currentPath());
+    dir.mkdir("videoMap");
+    dir.setPath(path);
+
+
+    //ask for vido
+    QString fileName = QFileDialog::getOpenFileName(this,
+        tr("Open Video"), "/home", tr("Video Files (*.mp4 *.avi *.gif)"));
+
+
+    QString command;
+    command.append("ffmpeg -i ");
+    command.append(fileName);
+    command.append(" ");
+    command.append(path);
+    command.append("/image%04d.jpg");
+    command.append(" -hide_banner");
+    qDebug() << "command for ffmpeg: " << command;
+
+    //split video in frames
+    QProcess cmd;
+    cmd.setWorkingDirectory(QDir::currentPath());
+    cmd.execute(command);
+    //cmd.execute("notepad");
+
+    //set some global variables
+    numVideoFrames = dir.count() - 2;  // files gaan van 1 tot numVideoFrames.. idk waarom er 2 extra files worden weergegeven.
+    currentVideoFrame = 1;
+    qDebug() << "total number of frames: " << numVideoFrames;
+    //start timer for handleVideo
+    videoTimer->start(200); //delay between each frame...
 }

@@ -17,9 +17,9 @@
    <item>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
-      <widget class="QPushButton" name="addSlideButton">
+      <widget class="QPushButton" name="startVideo">
        <property name="text">
-        <string>Add Default Slide</string>
+        <string>Start Video</string>
        </property>
       </widget>
      </item>

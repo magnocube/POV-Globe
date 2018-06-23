@@ -43,6 +43,7 @@ void HomePage::setResolution(int x, int y)
 {
     resolutionX = x;
     resolutionY = y;
+    tab_slideControl->setResolution(x,y);
 }
 
 
@@ -111,6 +112,7 @@ void HomePage::addNewSlide(QString type, QString param) //will be activated on t
     //1. zorg dat het widget een objetname heeft.
     //2. gebruik findchild met een cast
     //2. (voorbeeld):  Slide *mySlide = ui->scrollAreaWidgetContents_2->findChild<Slide *>("Button");
+
     break; //to exit while loop
     }
 }

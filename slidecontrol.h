@@ -8,6 +8,9 @@
 #include <QFileDialog>
 #include <QBuffer>
 #include <QMatrix>
+#include <QTimer>
+#include <QProcess>
+
 
 
 namespace Ui {
@@ -23,10 +26,11 @@ public:
     ~SlideControl();
     void setCurrentImage(Slide *theSlide);
     void setUpUdpLeds(QString ipstring);
+    void setResolution(int x,int y);
 
 
 private slots:
-    void on_addSlideButton_clicked();
+
 
     void on_pushButton_clicked();
 
@@ -38,6 +42,7 @@ private slots:
 
     void on_compressieSlider_valueChanged(int value);
     void sendSettings();
+    void handleVideo();
 
     void on_gammaSlider_valueChanged(int value);
 
@@ -45,15 +50,27 @@ private slots:
 
     void on_brightnessSlider_valueChanged(int value);
 
+    void on_startVideo_clicked();
+
 private:
     Ui::SlideControl *ui;
     Slide *myCurrentSlide;
     MyUDP *udpToLedsConnection;
 
+    QTimer *videoTimer;
+
     const int PACKETSIZE=1460;
     const int DATALENGTH=1450;
 
     QImage PrepreImageForSending(QImage image);
+    void sendImage(QImage image);
+
+
+    int currentVideoFrame;
+    int numVideoFrames;
+
+    int xResolution;
+    int yResolution;
 
 signals:
     void NewSlide(QString type, QString param);
