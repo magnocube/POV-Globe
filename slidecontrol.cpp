@@ -147,7 +147,7 @@ void SlideControl::sendImage(QImage image)
         QByteArray header(5,'^');  //^ is the default value
         header[0] = 0;
         header[1] = 0;
-        header[2] = 0;
+        header[2] = parts;
         header[3] = 0;
         header[4] = 2;//version
         if(part==parts-1)
@@ -178,12 +178,19 @@ void SlideControl::handleVideo()
 
     QImage videoImage(path);
     videoImage = videoImage.scaled(xResolution, yResolution, Qt::IgnoreAspectRatio);
+    QLabel *l = ui->imageLabel;
+    QPainter p(l);
+    p.drawImage(0,0,videoImage);
     sendImage(videoImage);
 
-    currentVideoFrame++;
+    currentVideoFrame+=2;
     if(currentVideoFrame > numVideoFrames){
-        videoTimer->stop();
+        if(ui->loopCheckBox->isChecked()){
+            //videoTimer->stop();
+        }
+        currentVideoFrame=0;
     }
+    videoTimer->setInterval(ui->contrastSlider->value());
 
 }
 void SlideControl::on_compressieSlider_valueChanged(int value)
@@ -246,4 +253,10 @@ void SlideControl::on_startVideo_clicked()
     qDebug() << "total number of frames: " << numVideoFrames;
     //start timer for handleVideo
     videoTimer->start(200); //delay between each frame...
+}
+
+void SlideControl::on_pushButton_2_clicked()
+{
+    videoTimer->stop();
+    currentVideoFrame = 0;
 }

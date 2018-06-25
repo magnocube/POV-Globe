@@ -24,6 +24,27 @@
       </widget>
      </item>
      <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_6">
+       <item>
+        <widget class="QPushButton" name="pushButton_2">
+         <property name="text">
+          <string>stop video</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="loopCheckBox">
+         <property name="text">
+          <string>loop video</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
       <widget class="QPushButton" name="pushButton">
        <property name="text">
         <string>Add Colored Slide</string>
@@ -44,17 +65,17 @@
        </property>
       </widget>
      </item>
+     <item>
+      <widget class="QPushButton" name="sendToGlobeButton">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(67, 255, 15);</string>
+       </property>
+       <property name="text">
+        <string>Send current selected slide to globe</string>
+       </property>
+      </widget>
+     </item>
     </layout>
-   </item>
-   <item>
-    <widget class="QPushButton" name="sendToGlobeButton">
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(67, 255, 15);</string>
-     </property>
-     <property name="text">
-      <string>Send current selected slide to globe</string>
-     </property>
-    </widget>
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_4">
@@ -161,7 +182,7 @@
          <item>
           <widget class="QSlider" name="contrastSlider">
            <property name="maximum">
-            <number>100</number>
+            <number>200</number>
            </property>
            <property name="singleStep">
             <number>10</number>
@@ -218,7 +239,7 @@
          <item>
           <widget class="QLabel" name="label_4">
            <property name="text">
-            <string>contrast</string>
+            <string>video speed</string>
            </property>
           </widget>
          </item>

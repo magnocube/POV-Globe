@@ -52,6 +52,8 @@ private slots:
 
     void on_startVideo_clicked();
 
+    void on_pushButton_2_clicked();
+
 private:
     Ui::SlideControl *ui;
     Slide *myCurrentSlide;
