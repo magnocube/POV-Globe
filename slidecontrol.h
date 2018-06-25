@@ -10,6 +10,7 @@
 #include <QMatrix>
 #include <QTimer>
 #include <QProcess>
+#include <QScreen>
 
 
 
@@ -43,7 +44,7 @@ private slots:
     void on_compressieSlider_valueChanged(int value);
     void sendSettings();
     void handleVideo();
-
+    void handleScreen();
     void on_gammaSlider_valueChanged(int value);
 
     void on_rotatieSlider_valueChanged(int value);
@@ -54,12 +55,17 @@ private slots:
 
     void on_pushButton_2_clicked();
 
+    void on_pushButton_3_clicked();
+
 private:
     Ui::SlideControl *ui;
     Slide *myCurrentSlide;
     MyUDP *udpToLedsConnection;
 
     QTimer *videoTimer;
+    QTimer *screenTimer;
+
+    bool screenStarted = false;
 
     const int PACKETSIZE=1460;
     const int DATALENGTH=1450;

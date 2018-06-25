@@ -8,8 +8,9 @@ SlideControl::SlideControl(QWidget *parent) :
     ui->setupUi(this);
 
     videoTimer = new QTimer(this);
+    screenTimer = new QTimer(this);
     connect(videoTimer,SIGNAL(timeout()),SLOT(handleVideo()));
-
+    connect(screenTimer,SIGNAL(timeout()),SLOT(handleScreen()));
     xResolution = 16;
     yResolution = 16;
 
@@ -178,9 +179,9 @@ void SlideControl::handleVideo()
 
     QImage videoImage(path);
     videoImage = videoImage.scaled(xResolution, yResolution, Qt::IgnoreAspectRatio);
-    QLabel *l = ui->imageLabel;
-    QPainter p(l);
-    p.drawImage(0,0,videoImage);
+//    QLabel *l = ui->imageLabel;
+//    QPainter p(l);
+//    p.drawImage(0,0,videoImage);
     sendImage(videoImage);
 
     currentVideoFrame+=2;
@@ -192,6 +193,22 @@ void SlideControl::handleVideo()
     }
     videoTimer->setInterval(ui->contrastSlider->value());
 
+}
+
+void SlideControl::handleScreen()
+{
+    QScreen *screen = QGuiApplication::primaryScreen();
+    if (screen)
+    {
+        QPixmap originalPixmap = screen->grabWindow(0);
+        QImage toSend = originalPixmap.toImage();
+        //toSend.fromData(originalPixmap);
+        toSend = toSend.scaled(xResolution, yResolution, Qt::IgnoreAspectRatio);
+        sendImage(toSend);
+         videoTimer->setInterval(ui->contrastSlider->value());
+    } else{
+        qDebug() << "no screen";
+    }
 }
 void SlideControl::on_compressieSlider_valueChanged(int value)
 {
@@ -259,4 +276,16 @@ void SlideControl::on_pushButton_2_clicked()
 {
     videoTimer->stop();
     currentVideoFrame = 0;
+}
+
+void SlideControl::on_pushButton_3_clicked()
+{
+    if(screenStarted)
+    {
+        screenTimer->stop();
+    }else
+    {
+        screenTimer->start(200);
+    }
+    screenStarted=!screenStarted;
 }
