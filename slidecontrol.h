@@ -57,6 +57,11 @@ private slots:
 
     void on_pushButton_3_clicked();
 
+    void on_contrastSlider_valueChanged(int value);
+    QImage contrast(QImage& source, int factor);
+
+    void on_verticalSlider_valueChanged(int value);
+
 private:
     Ui::SlideControl *ui;
     Slide *myCurrentSlide;
@@ -68,12 +73,12 @@ private:
     bool screenStarted = false;
 
     const int PACKETSIZE=1460;
-    const int DATALENGTH=1450;
+    const int DATALENGTH=1455;
 
     QImage PrepreImageForSending(QImage image);
     void sendImage(QImage image);
 
-
+    char flowLabel=0;
     int currentVideoFrame;
     int numVideoFrames;
 

@@ -2,9 +2,36 @@
 
 MyUDP::MyUDP(QObject *parent, QString ip) : QObject(parent)
 {
+
+    qDebug() << "udp setup"<<endl;
+    QNetworkInterface hotspot;
+    foreach(QNetworkInterface interface, QNetworkInterface::allInterfaces())
+    {
+         if((interface.flags().testFlag(QNetworkInterface::IsUp))&&interface.flags().testFlag(QNetworkInterface::IsRunning))
+         {
+            qDebug()<<interface.humanReadableName();
+            if(interface.humanReadableName().indexOf("Local")!=-1)
+            {
+                hotspot=interface;
+                qDebug()<<interface.humanReadableName()<<"choosen";
+            }
+         }
+    }
+    QHostAddress hotspotAddress;
+    foreach(QNetworkAddressEntry address, hotspot.addressEntries())
+    {
+        if(address.ip().protocol()== QAbstractSocket::IPv4Protocol)
+        {
+            hotspotAddress=address.ip();
+        }
+    }
+
     ipAdress = ip;
     socket = new QUdpSocket(this);
-    socket->bind(QHostAddress::Any,42069);
+    //qDebug()<<hotspot.addressEntries();
+    qDebug()<<hotspotAddress;
+    qDebug()<<
+    socket->bind(hotspotAddress,42069);
     connect(socket,SIGNAL(readyRead()),this,SLOT(readyRead()));
 }
 

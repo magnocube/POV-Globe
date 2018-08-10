@@ -112,6 +112,13 @@
           </widget>
          </item>
          <item>
+          <widget class="QLabel" name="label_11">
+           <property name="text">
+            <string>50</string>
+           </property>
+          </widget>
+         </item>
+         <item>
           <widget class="QLabel" name="label_7">
            <property name="text">
             <string>50</string>
@@ -189,6 +196,22 @@
          <item>
           <widget class="QSlider" name="contrastSlider">
            <property name="maximum">
+            <number>100</number>
+           </property>
+           <property name="value">
+            <number>50</number>
+           </property>
+           <property name="sliderPosition">
+            <number>50</number>
+           </property>
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSlider" name="speedSlider">
+           <property name="maximum">
             <number>200</number>
            </property>
            <property name="singleStep">
@@ -240,6 +263,13 @@
           <widget class="QLabel" name="label_3">
            <property name="text">
             <string>brightness</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="contrast">
+           <property name="text">
+            <string>contrast</string>
            </property>
           </widget>
          </item>
@@ -327,7 +357,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>contrastSlider</sender>
+   <sender>speedSlider</sender>
    <signal>valueChanged(int)</signal>
    <receiver>label_7</receiver>
    <slot>setNum(int)</slot>

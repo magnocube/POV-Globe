@@ -66,6 +66,7 @@ void SlideControl::on_safeToPc_clicked()
     // get the path..
     myCurrentSlide->safeToDisk("");
 }
+
 QImage SlideControl::PrepreImageForSending(QImage image)
 {
     //- make 2 images, with even and uneven slices
@@ -134,7 +135,7 @@ void SlideControl::sendImage(QImage image)
 
     int parts = ceil((double)ba.length()/PACKETSIZE);
     int progress =0;
-    char flowLabel=0;
+
 
     for(char part = 0; progress < ba.length();part++){
         int imagePartLength=DATALENGTH;
@@ -147,20 +148,21 @@ void SlideControl::sendImage(QImage image)
 
         QByteArray header(5,'^');  //^ is the default value
         header[0] = 0;
-        header[1] = 0;
+        header[1] = flowLabel;
         header[2] = parts;
-        header[3] = 0;
+        header[3] = part;
         header[4] = 2;//version
-        if(part==parts-1)
-        {
-            header[3] = 1;
-        }
+        //if(part==parts-1)
+        //{
+        //    header[3] = 1;
+       // }
 
         QByteArray toSend = partBuffer;
         toSend.append(header);
 
         udpToLedsConnection->sendToLeds(toSend);
     }
+    flowLabel++;
 }
 void SlideControl::handleVideo()
 {
@@ -194,7 +196,6 @@ void SlideControl::handleVideo()
     videoTimer->setInterval(ui->contrastSlider->value());
 
 }
-
 void SlideControl::handleScreen()
 {
     QScreen *screen = QGuiApplication::primaryScreen();
@@ -205,10 +206,15 @@ void SlideControl::handleScreen()
         //toSend.fromData(originalPixmap);
         toSend = toSend.scaled(xResolution, yResolution, Qt::IgnoreAspectRatio);
         sendImage(toSend);
-         videoTimer->setInterval(ui->contrastSlider->value());
+
     } else{
         qDebug() << "no screen";
     }
+}
+
+void SlideControl::on_contrastSlider_valueChanged(int value)
+{
+    videoTimer->setInterval(ui->contrastSlider->value());
 }
 void SlideControl::on_compressieSlider_valueChanged(int value)
 {
@@ -225,6 +231,10 @@ void SlideControl::on_rotatieSlider_valueChanged(int value)
 void SlideControl::on_brightnessSlider_valueChanged(int value)
 {
     sendSettings();
+}
+void SlideControl::on_verticalSlider_valueChanged(int value)
+{
+
 }
 
 void SlideControl::on_startVideo_clicked()
@@ -285,7 +295,9 @@ void SlideControl::on_pushButton_3_clicked()
         screenTimer->stop();
     }else
     {
-        screenTimer->start(200);
+        screenTimer->start(100);
     }
     screenStarted=!screenStarted;
 }
+
+

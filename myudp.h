@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QUdpSocket>
 #include <QDebug>
-
+#include <QNetworkInterface.h>
 
 class MyUDP : public QObject
 {
