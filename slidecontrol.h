@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QScrollArea>
+#include <QApplication>
 #include "slide.h"
 #include "myudp.h"
 #include <QFileDialog>
@@ -83,6 +84,8 @@ private:
 
     int xResolution;
     int yResolution;
+
+    QScreen *screen;
 
 signals:
     void NewSlide(QString type, QString param);

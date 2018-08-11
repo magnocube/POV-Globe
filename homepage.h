@@ -46,6 +46,8 @@ private:
     int resolutionX;
     int resolutionY;
 
+    void addSlideByImage(QImage image);
+
 public slots:
     void addNewSlide(QString type, QString param);
     void slideWantsAttention(QString name);

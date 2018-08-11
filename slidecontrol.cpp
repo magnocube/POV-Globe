@@ -7,12 +7,16 @@ SlideControl::SlideControl(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    screen = QGuiApplication::primaryScreen();
+
     videoTimer = new QTimer(this);
     screenTimer = new QTimer(this);
     connect(videoTimer,SIGNAL(timeout()),SLOT(handleVideo()));
     connect(screenTimer,SIGNAL(timeout()),SLOT(handleScreen()));
     xResolution = 16;
     yResolution = 16;
+
+    ui->recordingStatusLabel->setStyleSheet("background-color: #666666; color: #000000");
 
 }
 SlideControl::~SlideControl()
@@ -199,15 +203,10 @@ void SlideControl::handleVideo()
 }
 void SlideControl::handleScreen()
 {
-    QScreen *screen = QGuiApplication::primaryScreen();
     if (screen)
     {
-        QPixmap originalPixmap = screen->grabWindow(0);
-        QImage toSend = originalPixmap.toImage();
-        //toSend.fromData(originalPixmap);
-        toSend = toSend.scaled(xResolution, yResolution, Qt::IgnoreAspectRatio);
+        QImage toSend = screen->grabWindow(0).toImage().scaled(xResolution, yResolution, Qt::IgnoreAspectRatio);;
         sendImage(toSend);
-
     } else{
         qDebug() << "no screen";
     }
@@ -259,6 +258,9 @@ void SlideControl::on_startVideo_clicked()
     QString fileName = QFileDialog::getOpenFileName(this,
         tr("Open Video"), "/home", tr("Video Files (*.mp4 *.avi *.gif)"));
 
+    if(fileName == ""){
+        return;
+    }
 
     QString command;
     command.append("ffmpeg -i \"");
@@ -294,10 +296,15 @@ void SlideControl::on_pushButton_3_clicked()
 {
     if(screenStarted)
     {
+        ui->recordingStatusLabel->setText("Not recording");
+        ui->recordingStatusLabel->setStyleSheet("background-color: #666666; color: #000000");
         screenTimer->stop();
     }else
     {
         screenTimer->start(100);
+        ui->recordingStatusLabel->setText("Recording");
+        ui->recordingStatusLabel->setStyleSheet("background-color: #aaffaa; color: #000000");
+
     }
     screenStarted=!screenStarted;
 }

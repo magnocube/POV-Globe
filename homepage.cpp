@@ -55,12 +55,9 @@ HomePage::~HomePage()
 
 void HomePage::addNewSlide(QString type, QString param) //will be activated on the press of a button (in slidecontrol), and will add a slide to the list
 {
-    while(1==1){  //needed for break
-    QVBoxLayout* myLayout = qobject_cast<QVBoxLayout*>(ui->scrollAreaWidgetContents_2->layout());
+
     QImage myImage;
-    Slide *s;
-    QString slideName = "nameSlide" + QString::number(time->currentMSecsSinceEpoch()); // so the name is never the same
-    QGraphicsScene* theScene;
+
 
     if(type == "default"){
         if(param == "3image"){
@@ -70,37 +67,27 @@ void HomePage::addNewSlide(QString type, QString param) //will be activated on t
             myImage = QPixmap(100, 100).toImage();
             myImage.fill(color);
         } else if (param == "image"){
-            QString fileName = QFileDialog::getOpenFileName(this,
+            QStringList fileNames = QFileDialog::getOpenFileNames(this,
                 tr("Open Image"), "/C", tr("Image Files (*.png *.jpg *.bmp *.jpeg *.gif)"));
-            qDebug() << fileName;
-            if(fileName != ""){
-                 myImage = QImage(fileName);
-            } else{
-                break;
+            qDebug() << fileNames;
+            if( !fileNames.isEmpty() )
+            {
+                for (int i =0;i<fileNames.count();i++){
+                    myImage = QImage(fileNames.at(i));
+                    addSlideByImage(myImage);
+                }
+                return;
+            } else {
+                return;
             }
+
+
         }
     }
-
-    theScene = new QGraphicsScene(this);
-    myImage = myImage.scaled(resolutionX, resolutionY, Qt::IgnoreAspectRatio);
-
-    QGraphicsPixmapItem *imageItem = new QGraphicsPixmapItem( QPixmap::fromImage(myImage));// mooi verhaal dit
-
-    //imageItem->setFlag(QGraphicsItem::ItemIsSelectable);
-    //imageItem->setFlag(QGraphicsItem::ItemIsMovable);
-    //imageItem->setFlag(QGraphicsItem::ItemSendsGeometryChanges);
+    addSlideByImage(myImage);
 
 
-
-    theScene->addItem(imageItem);
-
-
-    s = new Slide(this, theScene, slideName,resolutionX,resolutionY);
-    myLayout->insertWidget(0,s);
-
-
-    connect(s,SIGNAL(onClick(QString)),this,SLOT(slideWantsAttention(QString)));
-    s->safe(); // select the current selected slide
+    // select the current selected slide
 
 //    Slide *mySlide = ui->scrollAreaWidgetContents_2->findChild<Slide *>("Button");
 //    if(mySlide != 0){
@@ -113,8 +100,31 @@ void HomePage::addNewSlide(QString type, QString param) //will be activated on t
     //2. gebruik findchild met een cast
     //2. (voorbeeld):  Slide *mySlide = ui->scrollAreaWidgetContents_2->findChild<Slide *>("Button");
 
-    break; //to exit while loop
-    }
+
+}
+void HomePage::addSlideByImage(QImage image)
+{
+    QVBoxLayout* myLayout = qobject_cast<QVBoxLayout*>(ui->scrollAreaWidgetContents_2->layout());
+
+    Slide *s;
+    QString slideName = "nameSlide" + QString::number(time->currentMSecsSinceEpoch()); // so the name is never the same
+
+    QGraphicsScene* theScene;
+    theScene = new QGraphicsScene(this);
+    QImage myImage = image.scaled(resolutionX, resolutionY, Qt::IgnoreAspectRatio);
+
+    QGraphicsPixmapItem *imageItem = new QGraphicsPixmapItem( QPixmap::fromImage(myImage));// mooi verhaal dit
+
+    //imageItem->setFlag(QGraphicsItem::ItemIsSelectable);
+    //imageItem->setFlag(QGraphicsItem::ItemIsMovable);
+    //imageItem->setFlag(QGraphicsItem::ItemSendsGeometryChanges);
+    theScene->addItem(imageItem);
+
+    s = new Slide(this, theScene, slideName,resolutionX,resolutionY);
+    myLayout->insertWidget(0,s);
+
+    connect(s,SIGNAL(onClick(QString)),this,SLOT(slideWantsAttention(QString)));
+    s->safe();
 }
 
 void HomePage::slideWantsAttention(QString name)//method called when a slide is pressed
