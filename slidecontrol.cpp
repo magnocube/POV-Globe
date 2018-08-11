@@ -117,6 +117,7 @@ QImage SlideControl::PrepreImageForSending(QImage image)
 }
 void SlideControl::sendImage(QImage image)
 {
+    ui->imageLabel->setPixmap(QPixmap::fromImage(image));
      QString path = QDir::currentPath();
     QImage imageToSend = PrepreImageForSending(image);
 
@@ -215,6 +216,7 @@ void SlideControl::handleScreen()
 void SlideControl::on_contrastSlider_valueChanged(int value)
 {
     videoTimer->setInterval(ui->contrastSlider->value());
+    screenTimer->setInterval(ui->contrastSlider->value());
 }
 void SlideControl::on_compressieSlider_valueChanged(int value)
 {
