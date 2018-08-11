@@ -58,7 +58,6 @@ private slots:
     void on_pushButton_3_clicked();
 
     void on_contrastSlider_valueChanged(int value);
-    QImage contrast(QImage& source, int factor);
 
     void on_verticalSlider_valueChanged(int value);
 
