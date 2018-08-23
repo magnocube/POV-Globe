@@ -44,6 +44,7 @@ private slots:
 
     void on_compressieSlider_valueChanged(int value);
     void sendSettings();
+    void sendGamma(int gamma);
     void handleVideo();
     void handleScreen();
     void on_gammaSlider_valueChanged(int value);

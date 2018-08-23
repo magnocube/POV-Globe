@@ -1,6 +1,8 @@
 #include "slidecontrol.h"
 #include "ui_slidecontrol.h"
 
+#include <QDateTime>
+
 SlideControl::SlideControl(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::SlideControl)
@@ -65,6 +67,23 @@ void SlideControl::sendSettings()
         udpToLedsConnection->sendToLeds(header);
         qDebug() << "new settings sended";
 }
+void SlideControl::sendGamma(int gamma)
+{
+        QByteArray gammaTable(256,'0');
+        for(float i=0.0; i<=255.0; i++) {
+              gammaTable[(int)i]=(uint8_t)(pow(i / 255.0,(gamma/50.0)) * 255.0 + 0.5);
+         }
+        QByteArray header(5,'0');  //^ is the default value
+        header[0]= 0;
+        header[1] = 0;
+        header[2] = 0;
+        header[3] = 0;
+        header[4] = 3;
+        QByteArray toSend = gammaTable;
+        toSend.append(header);
+        udpToLedsConnection->sendToLeds(toSend);
+        qDebug() << "new gamma correction sended";
+}
 void SlideControl::on_safeToPc_clicked()
 {
     // get the path..
@@ -119,6 +138,12 @@ QImage SlideControl::PrepreImageForSending(QImage image)
 
 
 }
+void delay()
+{
+    QTime dieTime= QTime::currentTime().addMSecs(100);
+    while (QTime::currentTime() < dieTime)
+        QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
+}
 void SlideControl::sendImage(QImage image)
 {
     ui->imageLabel->setPixmap(QPixmap::fromImage(image));
@@ -142,7 +167,7 @@ void SlideControl::sendImage(QImage image)
     int progress =0;
 
 
-    for(char part = 0; progress < ba.length();part++){
+    for(uint8_t part = 0; progress < ba.length();part++){
         int imagePartLength=DATALENGTH;
         if(progress+DATALENGTH>ba.length())
         {
@@ -161,11 +186,12 @@ void SlideControl::sendImage(QImage image)
         //{
         //    header[3] = 1;
        // }
-
+        qDebug() << part<<" "<<parts<<endl;
         QByteArray toSend = partBuffer;
         toSend.append(header);
 
         udpToLedsConnection->sendToLeds(toSend);
+
     }
     flowLabel++;
 }
@@ -223,7 +249,7 @@ void SlideControl::on_compressieSlider_valueChanged(int value)
 }
 void SlideControl::on_gammaSlider_valueChanged(int value)
 {
-    sendSettings();
+    sendGamma(value);
 }
 void SlideControl::on_rotatieSlider_valueChanged(int value)
 {
