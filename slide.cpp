@@ -81,12 +81,12 @@ QString Slide::safeToDisk(QString path)
 
     if(path == ""){   //if no path is given, get a path!.
         QFileDialog dialof(this);
-        path =  dialof.getSaveFileName(this,tr("select output folder"),QDir::currentPath(),tr("jpg"));
-        path.append(".jpg");
+        path =  dialof.getSaveFileName(this,tr("select output folder"),QDir::currentPath(),tr("bmp"));
+        path.append(".bmp");
 
     }
     qDebug() << path;
-    qDebug() << QString(imageToSafe.save(path,"jpg",25));   //quallity 25. size of 3.1kb
+    qDebug() << QString(imageToSafe.save(path,"jpg"));   //quallity 25. size of 3.1kb
 
     return("C:/Users/stefa/desktop");
 }

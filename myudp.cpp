@@ -65,12 +65,12 @@ void MyUDP::ChangeValue(int value)
     sendData(Data);
 }
 
-void MyUDP::sendToLeds(QByteArray byteArray)
+void MyUDP::sendToLeds(QByteArray byteArray,int port)
 {
     //a lot of work to do
    // qDebug() << byteArray.toLower() << ipAdress;
 
-    socket->writeDatagram(byteArray,QHostAddress(ipAdress),4210);
+    socket->writeDatagram(byteArray,QHostAddress(ipAdress),port);
 
 }
 

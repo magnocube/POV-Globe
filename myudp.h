@@ -15,7 +15,7 @@ public:
     void StartGlobe();
     void StopGlobe();
     void ChangeValue(int value);
-    void sendToLeds(QByteArray byteArray);
+    void sendToLeds(QByteArray byteArray,int port=4210);
 
 
 signals:

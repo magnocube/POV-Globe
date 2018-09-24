@@ -32,6 +32,9 @@ void HomePage::setupUDP(QString ipString) //lot of errors if this method does no
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(getNewSpeed()));
     timer->start(1000);
+    QTimer *timer2 = new QTimer(this);
+    connect(timer2, SIGNAL(timeout()), this, SLOT(updateSmoothSpeed()));
+    timer2->start(50);
 }
 
 void HomePage::setupLedUDP(QString ipstring)
@@ -145,9 +148,15 @@ void HomePage::slideWantsAttention(QString name)//method called when a slide is 
 void HomePage::newDataReceived(QString data) //all data received is from the UDP class
 {
     lastUDPMessageReceivedTime = time->currentMSecsSinceEpoch();
-    ui->label->setText("RPM: "+data);
-}
+    rawRPM=data.toInt();
+    qDebug()<<data;
 
+}
+void HomePage::updateSmoothSpeed()
+{
+    smoothRPM+=0.3*(rawRPM-smoothRPM);
+    ui->label->setText("RPM: "+ QString::number(smoothRPM));
+}
 void HomePage::getNewSpeed() //to get new speed AND check if globe is online
 {
     long timeSinceLastPacket = time->currentMSecsSinceEpoch()-lastUDPMessageReceivedTime;

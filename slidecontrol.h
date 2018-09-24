@@ -42,8 +42,8 @@ private slots:
 
     void on_safeToPc_clicked();
 
-    void on_compressieSlider_valueChanged(int value);
-    void sendSettings();
+    void sendRotationSettings(uint8_t rotation);
+    void sendBrighnessSettings(uint8_t brigness);
     void sendGamma(int gamma);
     void handleVideo();
     void handleScreen();
@@ -61,7 +61,6 @@ private slots:
 
     void on_contrastSlider_valueChanged(int value);
 
-    void on_verticalSlider_valueChanged(int value);
 
 private:
     Ui::SlideControl *ui;
@@ -82,10 +81,13 @@ private:
     char flowLabel=0;
     int currentVideoFrame;
     int numVideoFrames;
+    QString fileName;
 
     int xResolution;
     int yResolution;
 
+    int degrees=360;
+    int oldDegrees=360;
     QScreen *screen;
 
 signals:

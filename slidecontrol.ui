@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>459</width>
-    <height>340</height>
+    <width>651</width>
+    <height>475</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -56,7 +56,7 @@
        <item>
         <widget class="QLabel" name="recordingStatusLabel">
          <property name="autoFillBackground">
-          <bool>true</bool>
+          <bool>false</bool>
          </property>
          <property name="styleSheet">
           <string notr="true">background-color: #666666; color: #000000;
@@ -143,13 +143,6 @@
            </property>
           </widget>
          </item>
-         <item>
-          <widget class="QLabel" name="label_6">
-           <property name="text">
-            <string>25</string>
-           </property>
-          </widget>
-         </item>
         </layout>
        </item>
        <item>
@@ -182,10 +175,10 @@
             <number>128</number>
            </property>
            <property name="singleStep">
-            <number>10</number>
+            <number>1</number>
            </property>
            <property name="pageStep">
-            <number>20</number>
+            <number>10</number>
            </property>
            <property name="orientation">
             <enum>Qt::Vertical</enum>
@@ -212,22 +205,6 @@
           </widget>
          </item>
          <item>
-          <widget class="QSlider" name="contrastSlider">
-           <property name="maximum">
-            <number>100</number>
-           </property>
-           <property name="value">
-            <number>50</number>
-           </property>
-           <property name="sliderPosition">
-            <number>50</number>
-           </property>
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
-          </widget>
-         </item>
-         <item>
           <widget class="QSlider" name="speedSlider">
            <property name="maximum">
             <number>200</number>
@@ -240,19 +217,6 @@
            </property>
            <property name="value">
             <number>50</number>
-           </property>
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QSlider" name="compressieSlider">
-           <property name="maximum">
-            <number>100</number>
-           </property>
-           <property name="value">
-            <number>25</number>
            </property>
            <property name="orientation">
             <enum>Qt::Vertical</enum>
@@ -285,25 +249,182 @@
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="contrast">
-           <property name="text">
-            <string>contrast</string>
-           </property>
-          </widget>
-         </item>
-         <item>
           <widget class="QLabel" name="label_4">
            <property name="text">
             <string>video speed</string>
            </property>
           </widget>
          </item>
+        </layout>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_4">
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_5">
          <item>
-          <widget class="QLabel" name="label_5">
-           <property name="text">
-            <string>compressie</string>
+          <layout class="QVBoxLayout" name="verticalLayout_6">
+           <item>
+            <widget class="QGroupBox" name="groupBox">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="MinimumExpanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="title">
+              <string/>
+             </property>
+             <widget class="QRadioButton" name="ResolutionLow">
+              <property name="geometry">
+               <rect>
+                <x>0</x>
+                <y>20</y>
+                <width>109</width>
+                <height>17</height>
+               </rect>
+              </property>
+              <property name="text">
+               <string>low resolution</string>
+              </property>
+             </widget>
+             <widget class="QRadioButton" name="resolutionMedium">
+              <property name="geometry">
+               <rect>
+                <x>0</x>
+                <y>40</y>
+                <width>109</width>
+                <height>17</height>
+               </rect>
+              </property>
+              <property name="text">
+               <string>medium resolution</string>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
+              </property>
+             </widget>
+             <widget class="QRadioButton" name="resolutionHigh">
+              <property name="geometry">
+               <rect>
+                <x>0</x>
+                <y>60</y>
+                <width>109</width>
+                <height>17</height>
+               </rect>
+              </property>
+              <property name="text">
+               <string>high resolution</string>
+              </property>
+             </widget>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="groupBox_3">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="MinimumExpanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
            </property>
+           <property name="title">
+            <string>GroupBox</string>
+           </property>
+           <widget class="QRadioButton" name="degrees360">
+            <property name="geometry">
+             <rect>
+              <x>0</x>
+              <y>20</y>
+              <width>361</width>
+              <height>17</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>360 degrees</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+           <widget class="QRadioButton" name="degrees240">
+            <property name="geometry">
+             <rect>
+              <x>0</x>
+              <y>40</y>
+              <width>361</width>
+              <height>17</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>240 degrees</string>
+            </property>
+           </widget>
+           <widget class="QRadioButton" name="degrees180">
+            <property name="geometry">
+             <rect>
+              <x>0</x>
+              <y>60</y>
+              <width>361</width>
+              <height>17</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>180 degrees</string>
+            </property>
+           </widget>
           </widget>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_7">
+           <item>
+            <widget class="QGroupBox" name="groupBox_2">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="MinimumExpanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="title">
+              <string/>
+             </property>
+             <widget class="QRadioButton" name="bits4">
+              <property name="geometry">
+               <rect>
+                <x>0</x>
+                <y>20</y>
+                <width>111</width>
+                <height>17</height>
+               </rect>
+              </property>
+              <property name="text">
+               <string>low quallity colors</string>
+              </property>
+             </widget>
+             <widget class="QRadioButton" name="bits8">
+              <property name="geometry">
+               <rect>
+                <x>0</x>
+                <y>40</y>
+                <width>109</width>
+                <height>17</height>
+               </rect>
+              </property>
+              <property name="text">
+               <string>high quality colors</string>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </widget>
+           </item>
+          </layout>
          </item>
         </layout>
        </item>
@@ -387,22 +508,6 @@
     <hint type="destinationlabel">
      <x>186</x>
      <y>165</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>compressieSlider</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>label_6</receiver>
-   <slot>setNum(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>233</x>
-     <y>213</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>231</x>
-     <y>164</y>
     </hint>
    </hints>
   </connection>

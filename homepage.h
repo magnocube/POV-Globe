@@ -45,7 +45,8 @@ private:
 
     int resolutionX;
     int resolutionY;
-
+    int smoothRPM=0;
+    int rawRPM=0;
     void addSlideByImage(QImage image);
 
 public slots:
@@ -53,7 +54,7 @@ public slots:
     void slideWantsAttention(QString name);
     void newDataReceived(QString data);
     void getNewSpeed();
-
+    void updateSmoothSpeed();
 
 
 private slots:

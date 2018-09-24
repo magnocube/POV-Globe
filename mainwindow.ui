@@ -598,7 +598,7 @@ QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
                  </size>
                 </property>
                 <property name="text">
-                 <string>256</string>
+                 <string>512</string>
                 </property>
                </widget>
               </item>
