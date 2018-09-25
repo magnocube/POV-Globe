@@ -64,7 +64,7 @@ private slots:
 
 private:
     Ui::SlideControl *ui;
-    Slide *myCurrentSlide;
+    Slide *myCurrentSlide = nullptr;
     MyUDP *udpToLedsConnection;
 
     QTimer *videoTimer;
@@ -81,6 +81,7 @@ private:
     char flowLabel=0;
     int currentVideoFrame;
     int numVideoFrames;
+    bool videoIsRunning = false;
     QString fileName;
 
     int xResolution;

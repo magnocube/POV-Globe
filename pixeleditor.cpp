@@ -86,6 +86,9 @@ void PixelEditor::setupLayout()
 void PixelEditor::on_addEllipseButton_clicked()
 {
 
+    if(myCurrentSlide == nullptr){
+        return;
+    }
     CustomEllipse *ellipse = new  CustomEllipse();
     myCurrentSlide->getScene()->addItem(ellipse);
     connect(ellipse,SIGNAL(updateGraphics()),this,SLOT(updateGraphicsview()));
@@ -95,6 +98,9 @@ void PixelEditor::on_addEllipseButton_clicked()
 
 void PixelEditor::on_addRectangleButton_clicked()
 {
+    if(myCurrentSlide == nullptr){
+        return;
+    }
 
     CustomRect *rect = new  CustomRect();
     myCurrentSlide->getScene()->addItem(rect);
@@ -104,6 +110,9 @@ void PixelEditor::on_addRectangleButton_clicked()
 
 void PixelEditor::on_addTextButton_clicked()
 {
+    if(myCurrentSlide == nullptr){
+        return;
+    }
     CustomText *text = new CustomText();
     myCurrentSlide->getScene()->addItem(text);
     connect(text,SIGNAL(updateGraphics()),this,SLOT(updateGraphicsview()));
@@ -112,6 +121,9 @@ void PixelEditor::on_addTextButton_clicked()
 
 void PixelEditor::on_addImageButton_clicked()
 {
+    if(myCurrentSlide == nullptr){
+        return;
+    }
     QImage myImage;
     QString fileName = QFileDialog::getOpenFileName(this,
         tr("Open Image"), "/C", tr("Image Files (*.png *.jpg *.bmp *.jpeg *.gif)"));

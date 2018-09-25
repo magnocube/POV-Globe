@@ -21,24 +21,18 @@
        <item>
         <widget class="QPushButton" name="startVideo">
          <property name="text">
-          <string>Start Video</string>
+          <string>Start/Stop Video</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_2">
-         <property name="text">
-          <string>stop video</string>
+        <widget class="QLabel" name="videoStatusLabel">
+         <property name="styleSheet">
+          <string notr="true">background-color: #666666; color: #000000;
+</string>
          </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="loopCheckBox">
          <property name="text">
-          <string>loop video</string>
-         </property>
-         <property name="checked">
-          <bool>true</bool>
+          <string>Not playing</string>
          </property>
         </widget>
        </item>
@@ -49,7 +43,7 @@
        <item>
         <widget class="QPushButton" name="pushButton_3">
          <property name="text">
-          <string>start/stop screen recording</string>
+          <string>Start/Stop screen recording</string>
          </property>
         </widget>
        </item>
@@ -277,7 +271,7 @@
               </sizepolicy>
              </property>
              <property name="title">
-              <string/>
+              <string>image quallity</string>
              </property>
              <widget class="QRadioButton" name="ResolutionLow">
               <property name="geometry">
@@ -334,7 +328,7 @@
             </sizepolicy>
            </property>
            <property name="title">
-            <string>GroupBox</string>
+            <string>use percentage of globe</string>
            </property>
            <widget class="QRadioButton" name="degrees360">
             <property name="geometry">
@@ -391,7 +385,7 @@
               </sizepolicy>
              </property>
              <property name="title">
-              <string/>
+              <string>color quallity</string>
              </property>
              <widget class="QRadioButton" name="bits4">
               <property name="geometry">

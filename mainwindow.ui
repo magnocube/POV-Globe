@@ -533,6 +533,9 @@ QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
            <layout class="QGridLayout" name="gridLayout">
             <item row="2" column="2">
              <widget class="QLineEdit" name="lineEdit">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
               <property name="maximumSize">
                <size>
                 <width>135</width>
@@ -575,6 +578,9 @@ QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
             </item>
             <item row="2" column="0">
              <widget class="QLabel" name="label_2">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
               <property name="text">
                <string>Password:</string>
               </property>
@@ -582,6 +588,9 @@ QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
             </item>
             <item row="3" column="0">
              <widget class="QLabel" name="label_4">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
               <property name="text">
                <string>resolution:</string>
               </property>
@@ -591,6 +600,9 @@ QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
              <layout class="QHBoxLayout" name="horizontalLayout">
               <item>
                <widget class="QLineEdit" name="lineEditX">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
                 <property name="maximumSize">
                  <size>
                   <width>65</width>
@@ -604,6 +616,9 @@ QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
               </item>
               <item>
                <widget class="QLineEdit" name="lineEditY">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
                 <property name="maximumSize">
                  <size>
                   <width>65</width>

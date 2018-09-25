@@ -19,6 +19,7 @@ SlideControl::SlideControl(QWidget *parent) :
     yResolution = 16;
 
     ui->recordingStatusLabel->setStyleSheet("background-color: #666666; color: #000000");
+    ui->videoStatusLabel->setStyleSheet("background-color: #666666; color: #000000");
 
 }
 SlideControl::~SlideControl()
@@ -49,36 +50,42 @@ void SlideControl::on_addImageButton_clicked()
 }
 void SlideControl::on_sendToGlobeButton_clicked()
 {
+    if(myCurrentSlide == nullptr){
+        return;
+    }
     QImage image = myCurrentSlide->getImage();
+
     sendImage(image);
 }
 void SlideControl:: sendRotationSettings(uint8_t rotation)
 {
-        QByteArray header(2,'^');  //0 is the default value
-        header[0]= 5;//packet type
-        header[1] = rotation+128;
-        udpToLedsConnection->sendToLeds(header);
-        qDebug() << "new rotation sended";
+    QByteArray header(2,'^');  //0 is the default value
+    header[0]= 5;//packet type
+    header[1] = rotation+128;
+    udpToLedsConnection->sendToLeds(header);
+    qDebug() << "new rotation sended";
 }
 void SlideControl::sendBrighnessSettings(uint8_t brighness)
 {
-        QByteArray header(2,'^');  //0 is the default value
-        header[0]= 6;//packet type
-        header[1] = brighness;
-        udpToLedsConnection->sendToLeds(header);
-        qDebug() << "new brighness sended";
+    QByteArray header(2,'^');  //0 is the default value
+    header[0]= 6;//packet type
+    header[1] = brighness;
+    udpToLedsConnection->sendToLeds(header);
+    qDebug() << "new brighness sended";
 }
 void SlideControl::sendGamma(int gamma)
 {
-        QByteArray header(2,'0');  //0 is the default value
-        header[0]= 7;//packet type
-        header[1] = gamma;;
-        udpToLedsConnection->sendToLeds(header);
-        qDebug() << "new gamma correction sended";
+    QByteArray header(2,'0');  //0 is the default value
+    header[0]= 7;//packet type
+    header[1] = gamma;;
+    udpToLedsConnection->sendToLeds(header);
+    qDebug() << "new gamma correction sended";
 }
 void SlideControl::on_safeToPc_clicked()
 {
-    // get the path..
+    if(myCurrentSlide == nullptr){
+        return;
+    }
     myCurrentSlide->safeToDisk("");
 }
 
@@ -145,7 +152,8 @@ void delay()
 }
 void SlideControl::sendImage(QImage image)
 {
-     QString path = QDir::currentPath();
+
+    QString path = QDir::currentPath();
 
 #ifdef LOSSLESS
     int mode=0;
@@ -229,7 +237,7 @@ void SlideControl::sendImage(QImage image)
         int length=dataSize+1;
         if(pixelPointer+dataSize>(imageToSend.width() * imageToSend.height()*bytes))
         {
-           length= (imageToSend.width() * imageToSend.height()*bytes)-pixelPointer;
+            length= (imageToSend.width() * imageToSend.height()*bytes)-pixelPointer;
         }
         QByteArray partBuffer = QByteArray::fromRawData((char*)bits+pixelPointer, length);
         QByteArray header(5,0);
@@ -238,7 +246,7 @@ void SlideControl::sendImage(QImage image)
         header[2] =  (pixelPointer & 0x00ff00) >> 8;
         header[3] = (pixelPointer & 0xff0000) >> 16;
         header[4] = mode+((xResolution/64)<<4)+(clearMemory<<3);
-         clearMemory=false;
+        clearMemory=false;
         QByteArray toSend = header;
         toSend.append(partBuffer);
 
@@ -263,9 +271,9 @@ void SlideControl::sendImage(QImage image)
     buffer.open(QIODevice::WriteOnly);
     imageToSend.save(&buffer, "jpg",ui->compressieSlider->value());
 
-//    QFile file(path);
-//    file.open(QIODevice::ReadOnly);
-//    QByteArray ba = file.readAll();
+    //    QFile file(path);
+    //    file.open(QIODevice::ReadOnly);
+    //    QByteArray ba = file.readAll();
     qDebug() << ba.length();
     int parts = ceil((double)ba.length()/PACKETSIZE);
     int progress =0;
@@ -289,7 +297,7 @@ void SlideControl::sendImage(QImage image)
         //if(part==parts-1)
         //{
         //    header[3] = 1;
-       // }
+        // }
         qDebug() << part<<" "<<parts<<endl;
         QByteArray toSend = partBuffer;
         toSend.append(header);
@@ -318,18 +326,16 @@ void SlideControl::handleVideo()
 
     QImage videoImage(path);
     videoImage = videoImage.scaled(xResolution, yResolution, Qt::IgnoreAspectRatio);
-//    QLabel *l = ui->imageLabel;
-//    QPainter p(l);
-//    p.drawImage(0,0,videoImage);
-     ui->imageLabel->setPixmap(QPixmap::fromImage(videoImage.scaled(256, 128)));
+    //    QLabel *l = ui->imageLabel;
+    //    QPainter p(l);
+    //    p.drawImage(0,0,videoImage);
+    ui->imageLabel->setPixmap(QPixmap::fromImage(videoImage.scaled(256, 128)));
     sendImage(videoImage);
 
 
     currentVideoFrame+=2;
     if(currentVideoFrame > numVideoFrames){
-        if(ui->loopCheckBox->isChecked()){
-            //videoTimer->stop();
-        }
+
         currentVideoFrame=0;
     }
     videoTimer->setInterval(ui->speedSlider->value());
@@ -368,56 +374,68 @@ void SlideControl::on_brightnessSlider_valueChanged(int value)
 
 void SlideControl::on_startVideo_clicked()
 {
+    videoIsRunning = !videoIsRunning;
 
-    QString path = QDir::currentPath();  //home dir of project
-    QDir dir(path);
-    path.append("/videoMap");
-
-
-    dir.setPath(path);
-
-    dir.removeRecursively();
-    dir.setPath(QDir::currentPath());
-    dir.mkdir("videoMap");
-    dir.setPath(path);
+    if(videoIsRunning){
+        ui->videoStatusLabel->setStyleSheet("background-color: #aaffaa; color: #000000");
+        ui->videoStatusLabel->setText("Recording");
+        QString path = QDir::currentPath();  //home dir of project
+        QDir dir(path);
+        path.append("/videoMap");
 
 
-    //ask for vido
-    QString fileName = QFileDialog::getOpenFileName(this,
-        tr("Open Video"), "/home", tr("Video Files (*.mp4 *.avi *.gif)"));
+        dir.setPath(path);
 
-    if(fileName == ""){
-        return;
+        dir.removeRecursively();
+        dir.setPath(QDir::currentPath());
+        dir.mkdir("videoMap");
+        dir.setPath(path);
+
+
+        //ask for vido
+        QString fileName = QFileDialog::getOpenFileName(this,
+                                                        tr("Open Video"), "/home", tr("Video Files (*.mp4 *.avi *.gif)"));
+
+        if(fileName == ""){
+            ui->videoStatusLabel->setText("Not recording");
+            ui->videoStatusLabel->setStyleSheet("background-color: #666666; color: #000000");
+            return;
+        }
+
+        QString command;
+        command.append("ffmpeg -i \"");
+        command.append(fileName);
+        command.append("\" \"");
+        command.append(path);
+        command.append("/image%04d.jpg\"");
+        command.append(" -hide_banner");
+
+        qDebug() << "command for ffmpeg: " << command.toUtf8().constData();
+
+        //split video in frames
+        QProcess cmd;
+        cmd.setWorkingDirectory(QDir::currentPath());
+        cmd.execute(command);
+        //cmd.execute("notepad");
+
+        //set some global variables
+        numVideoFrames = dir.count() - 2;  // files gaan van 1 tot numVideoFrames.. idk waarom er 2 extra files worden weergegeven.
+        currentVideoFrame = 1;
+        qDebug() << "total number of frames: " << numVideoFrames;
+        //start timer for handleVideo
+        videoTimer->start(200); //delay between each frame...
+    } else { // video is not running
+        ui->videoStatusLabel->setText("Not recording");
+        ui->videoStatusLabel->setStyleSheet("background-color: #666666; color: #000000");
+        videoTimer->stop();
+        currentVideoFrame = 0;
     }
-
-    QString command;
-    command.append("ffmpeg -i \"");
-    command.append(fileName);
-    command.append("\" \"");
-    command.append(path);
-    command.append("/image%04d.jpg\"");
-    command.append(" -hide_banner");
-
-    qDebug() << "command for ffmpeg: " << command.toUtf8().constData();
-
-    //split video in frames
-    QProcess cmd;
-    cmd.setWorkingDirectory(QDir::currentPath());
-    cmd.execute(command);
-    //cmd.execute("notepad");
-
-    //set some global variables
-    numVideoFrames = dir.count() - 2;  // files gaan van 1 tot numVideoFrames.. idk waarom er 2 extra files worden weergegeven.
-    currentVideoFrame = 1;
-    qDebug() << "total number of frames: " << numVideoFrames;
-    //start timer for handleVideo
-    videoTimer->start(200); //delay between each frame...
 }
 
 void SlideControl::on_pushButton_2_clicked()
 {
-    videoTimer->stop();
-    currentVideoFrame = 0;
+//    videoTimer->stop();
+//    currentVideoFrame = 0;  // button does not exist annumore
 }
 
 void SlideControl::on_pushButton_3_clicked()
