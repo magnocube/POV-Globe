@@ -48,7 +48,7 @@ public slots:
 
 private:
     Ui::PixelEditor *ui;
-    Slide *myCurrentSlide;
+    Slide *myCurrentSlide=nullptr;
     void setupLayout();
 
 protected:
