@@ -37,6 +37,10 @@ void PixelEditor::on_SafeButton_clicked()
     //    myCurrentSlide->setImage(image);
     //    QRectF myRect(10,10,30,30);
     //    myCurrentSlide->getScene()->addRect(myRect,QPen(),QBrush());
+    if(myCurrentSlide == nullptr){
+        return;
+    }
+
 
     myCurrentSlide->safe();
 }
